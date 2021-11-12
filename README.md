@@ -1,4 +1,4 @@
-<img src="resources/img/discordsheets.png"><img>
+<p align=center><img src="resources/img/discordsheets.png"><img></p>
 
 > Version 1.0 - Discord Bot that manages a Google Sheets File
 
