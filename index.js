@@ -8,7 +8,8 @@ const credentials = require("./credentials.json");
 
 const TOKEN_PATH = 'token.json';
 const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-// const sheet = { spreadsheetId: "1otSMDNp4R3h5GCZrlA1GxDTl4LtglZ4n0QheN7EsZNM", range: "TEST2 (DO NOT TOUCH)!A2:K141" }
+
+// Consider adding a line into config.json with your spreadsheetID or just change this line to use your own spreadsheet.
 const sheet = { spreadsheetId: "11y6fvA177pUczHOJgGj0BeUX5n4uWIOeKPJCtqYDirY", range: "Hoja 1!A2:E141" }
 
 //Check if credentials are ok within credentials.json
@@ -101,14 +102,14 @@ function showPlayer(msg, args) {
             if (rows.length) {
                 let bool = false;
                 rows.map((row) => {
-                    // ['Dakri', 'Damage', '', '', '', '42', 'Spear', '', 'Bow', '', '2']
+                    // Row format is the following => ['Name', 'Role', 'Level', 'MainWeapon', 'OffWeapon']
                     if (row[0] === args2[1]) {
                         let mainwpn;
-                        mainwpn = row[6].replace(/ /, '');
+                        mainwpn = row[3].replace(/ /, '');
 
                         //This builds information as an embed message
                         const embed = new MessageEmbed()
-                            .setTitle(`${row[0]}`)
+                            .setTitle(`${row[0]}`) // Name as title
                             .setThumbnail(`attachment://${mainwpn}.png`)
                             .setColor('WHITE')
                             .addFields(
@@ -124,7 +125,7 @@ function showPlayer(msg, args) {
                     }
                 });
                 if (!bool) {
-                    msg.reply(`Player not found, sorry :(, remember to use single-quote (') when looking for players' name.`);
+                    msg.reply(`Player not found, sorry :(, remember to use single-quote (') when looking for players`);
                 }
             }
         });
@@ -138,9 +139,9 @@ function helpEmbed(msg) {
         .setColor('NAVY')
         .setDescription('Here you can see the available commands for version 0.1v')
         .addFields(
-            { name: '$showall:', value: 'Shows the entire list of the guild' },
-            { name: '$show {name}', value: 'Shows an unique player. Name has to be given in {name} argument.' },
-            { name: '$help:', value: 'Shows basic commands.' },
+            { name: `${prefix}showall`, value: 'Shows the entire list of the guild' },
+            { name: `${prefix}show {name}`, value: 'Shows an unique player. Name has to be given in {name} argument.' },
+            { name: `${prefix}help`, value: 'Shows basic commands.' },
         )
         .setTimestamp();
     msg.author.send({ embeds: [embed] });
