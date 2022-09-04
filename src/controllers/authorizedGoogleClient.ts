@@ -10,7 +10,7 @@ export class AuthorizedGoogleClient {
     private SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
     private client: OAuth2Client;
 
-    async loadSavedCredentialsIfExist(): Promise<any> {
+    private async loadSavedCredentialsIfExist(): Promise<any> {
         try {
             const content = await readFile(this.TOKEN_PATH);
             const credentials = JSON.parse((content as unknown) as string);
@@ -20,7 +20,7 @@ export class AuthorizedGoogleClient {
         }
     }
 
-    async saveCredentials(client: OAuth2Client) {
+    private async saveCredentials(client: OAuth2Client) {
         const content = await readFile(this.CREDENTIALS_PATH);
         const keys = JSON.parse((content as unknown) as string);
         const key = keys.installed || keys.web;
@@ -33,7 +33,7 @@ export class AuthorizedGoogleClient {
         await writeFile(this.TOKEN_PATH, payload);
     }
 
-    async authorize() {
+    private async authorize() {
         let client = await this.loadSavedCredentialsIfExist();
         if (client) {
             this.client = client;
@@ -50,7 +50,7 @@ export class AuthorizedGoogleClient {
         return;
     }
 
-    async getClient() {
+    public async getClient() {
         await this.authorize();
         console.log('Logged into Google');
         return this.client;

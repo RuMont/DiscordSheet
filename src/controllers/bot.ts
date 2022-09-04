@@ -5,6 +5,7 @@ import {
     MessageComponentInteraction 
 } from 'discord.js';
 import slashCommands from '../commands/index';
+import { buttonEvents } from '../events';
 
 export class Bot extends DiscordClient {
 
@@ -13,7 +14,7 @@ export class Bot extends DiscordClient {
         this.login(token);
     }
 
-    isReady() {
+    public isReady() {
         return this.on("ready", async () => {
             if (!this.user || !this.application) return;
             await this.application.commands.set(slashCommands);
@@ -21,7 +22,7 @@ export class Bot extends DiscordClient {
         });
     }
 
-    allowInteractions() {
+    public allowInteractions() {
         return this.on("interactionCreate", async (interaction: Interaction) =>{
             if (interaction.isCommand() || interaction.isContextMenuCommand()) {
                 await this.handleSlashCommand(interaction);
@@ -43,9 +44,11 @@ export class Bot extends DiscordClient {
     }
 
     private async handleButtonEvent(interaction: MessageComponentInteraction) {
-        const filter = (i: MessageComponentInteraction) => i.customId == "test_button" ;
-        // const procedEvent = buttonEvents.find((event) => event.name === interaction.customId);
-        console.log(interaction);
-        await interaction.update({content: 'The button was clicked'});
+        const procedEvent = buttonEvents.find((event) => event.name === interaction.customId);
+        if (!procedEvent) {
+            interaction.update({content: "An error has ocurred"});
+            return;
+        }
+        procedEvent?.run(this, interaction);
     }
 }

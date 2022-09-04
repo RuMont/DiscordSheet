@@ -1,7 +1,7 @@
+import { ButtonEvent } from '../interfaces/buttonEvent';
+import { test } from './test';
 
-// const buttonEvents: buttonEventProcess[] = [
-
-// ]
-
-// export default eventCommands;
+export const buttonEvents: ButtonEvent[] = [
+    test
+]
 
