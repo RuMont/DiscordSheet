@@ -1,6 +1,6 @@
 <p align=center><img src="https://i.imgur.com/WRxHsVN.png"><img></p>
 
-> Version 2.0 - Discord Bot that manages a Google Sheets File
+> Version 0.2.0 - Discord Bot that manages a Google Sheets File
 
 A Discord Bot that extracts information from a Google Sheets File. It was created to manage a ~~*New World's*~~ World of Warcraft Classic players list.
 
@@ -15,6 +15,7 @@ A Discord Bot that extracts information from a Google Sheets File. It was create
     - Changed from config.json to a .env file and a config folder.
     - Upgraded from Discord.js v13 to v14, API version is 10.
     - Now commands are not message based but interaction based.
+    - Improved versioning.
 
 ## About this project
 
